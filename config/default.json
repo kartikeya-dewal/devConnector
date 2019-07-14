@@ -1,3 +1,4 @@
 {
-  "mongoURI": "<your-mongo-uri>"
+  "mongoURI": "mongodb+srv://kartik:kartik@devconnector-aiwlf.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "myToken"
 }
