@@ -6,6 +6,7 @@ const config = require('config');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
+const logger = require('../../lib/logger');
 
 /**
  * @route       GET /api/auth
@@ -17,7 +18,7 @@ router.get('/', auth, async (req, res) => {
     const user = await User.findById(req.user.id).select('-password');
     res.json(user);
   } catch (err) {
-    console.error(err.message);
+    logger.error(err.message);
     res.status(500).send('Server Error');
   }
 });
@@ -68,7 +69,7 @@ router.post('/',
       );
 
     } catch (err) {
-      console.error(err.message);
+      logger.error(err.message);
       return res.status(500).send('Server error');
     }
   });

@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
+const logger = require('../../lib/logger');
 const User = require('../../models/User');
 
 /**
@@ -60,7 +61,7 @@ router.post('/',
       );
 
     } catch (err) {
-      console.error(err.message);
+      logger.error(err.message);
       return res.status(500).send('Server error');
     }
   });

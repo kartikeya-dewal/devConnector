@@ -6,6 +6,7 @@ const request = require('request');
 const config = require('config');
 const User = require('../../models/User');
 const { check, validationResult } = require('express-validator');
+const logger = require('../../lib/logger');
 
 /**
  * @route       GET /api/profile/me
@@ -20,7 +21,7 @@ router.get('/me', auth, async (req, res) => {
     }
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
+    logger.error(err.message);
     res.status(500).send('Server Error');
   }
 });
@@ -75,7 +76,7 @@ router.post('/', [auth,
     await profile.save();
     return res.json(profile);
   } catch (err) {
-    console.error(err.message);
+    logger.error(err.message);
     res.status(500).send('Server Error');
   }
 
@@ -92,7 +93,7 @@ router.get('/', async (req, res) => {
     const profiles = await Profile.find().populate('user', ['name', 'avatar']);
     res.json(profiles);
   } catch (err) {
-    console.error(err.message);
+    logger.error(err.message);
     res.status(500).send('Server Errror');
   }
 });
@@ -108,7 +109,7 @@ router.get('/user/:userId', async (req, res) => {
     if (!profile) return res.status(400).json({ msg: 'Profile not found' });
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
+    logger.error(err.message);
     if (err.kind == 'ObjectId') {
       return res.status(400).json({ msg: 'Profile not found' });
     }
@@ -130,7 +131,7 @@ router.delete('/', auth, async (req, res) => {
     await User.findOneAndRemove({ _id: req.user.id });
     res.json({ msg: 'User deleted' });
   } catch (err) {
-    console.error(err.message);
+    logger.error(err.message);
     res.status(500).send('Server Errror');
   }
 });
@@ -157,7 +158,7 @@ router.put('/experience', [auth, [
     await profile.save();
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
+    logger.error(err.message);
     return res.status(500).send('Server error');
   }
 });
@@ -176,7 +177,7 @@ router.delete('/experience/:expId', auth, async (req, res) => {
     await profile.save();
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
+    logger.error(err.message);
     return res.status(500).send('Server error');
   }
 });
@@ -204,7 +205,7 @@ router.put('/education', [auth, [
     await profile.save();
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
+    logger.error(err.message);
     return res.status(500).send('Server error');
   }
 });
@@ -223,7 +224,7 @@ router.delete('/education/:eduId', auth, async (req, res) => {
     await profile.save();
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
+    logger.error(err.message);
     return res.status(500).send('Server error');
   }
 });
@@ -243,14 +244,14 @@ router.get('/github/:username', (req, res) => {
       headers: { 'user-agent': 'node.js' }
     }
     request(options, (error, response, body) => {
-      if (error) console.error(error);
+      if (error) logger.error(error);
       if (response.statusCode != 200) {
         res.status(400).json({ msg: 'No github profile found' });
       }
       res.json(JSON.parse(body))
     });
   } catch (err) {
-    console.error(err.message);
+    logger.error(err.message);
     return res.status(500).send('Server error');
   }
 });

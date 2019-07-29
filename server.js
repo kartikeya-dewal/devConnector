@@ -21,5 +21,4 @@ app.use('/api/posts', require('./routes/api/posts'));
 
 app.listen(PORT, () => {
   logger.info(`Listening on port ${PORT}`);
-  // console.log(`Listening on port ${PORT}`);
 });
