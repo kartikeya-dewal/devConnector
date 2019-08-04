@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../../actions/profile';
@@ -44,7 +44,8 @@ const EditProfile = ({
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       instagram: loading || !profile.social ? '' : profile.social.instagram
     });
-  }, [getCurrentProfile, loading, profile]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, getCurrentProfile]);
 
   const {
     company,
@@ -66,15 +67,14 @@ const EditProfile = ({
 
   const onSubmit = e => {
     e.preventDefault();
-    createProfile(formData, history);
+    createProfile(formData, history, true);
   };
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Create Your Profile</h1>
+      <h1 className='large text-primary'>Edit Your Profile</h1>
       <p className='lead'>
-        <i className='fas fa-user' /> Let's get some information to make your
-        profile stand out
+        <i className='fas fa-user' /> Add some changes to your profile
       </p>
       <small>* = required field</small>
       <form className='form' onSubmit={e => onSubmit(e)}>
@@ -167,7 +167,7 @@ const EditProfile = ({
 
         <div className='my-2'>
           <button
-            onChange={() => toggleSocialInputs(!displaySocialInputs)}
+            onClick={() => toggleSocialInputs(!displaySocialInputs)}
             type='button'
             className='btn btn-light'>
             Add Social Network Links
@@ -234,9 +234,9 @@ const EditProfile = ({
         )}
 
         <input type='submit' className='btn btn-primary my-1' />
-        <a className='btn btn-light my-1' href='dashboard.html'>
+        <Link to='/dashboard' className='btn btn-light my-1'>
           Go Back
-        </a>
+        </Link>
       </form>
     </Fragment>
   );
