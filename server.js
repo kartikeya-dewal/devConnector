@@ -2,11 +2,13 @@ const express = require('express');
 const connectDB = require('./config/db');
 const app = express();
 const logger = require('./lib/logger');
+const morgan = require('morgan');
 
 // Connect database
 connectDB();
 
 // Init middleware
+app.use(morgan('dev'));
 app.use(express.json({ extended: false }));
 
 const PORT = process.env.PORT || 5000;
