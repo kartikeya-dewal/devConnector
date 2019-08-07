@@ -6,7 +6,10 @@ import Spinner from '../common/Spinner';
 import PostItem from './PostItem';
 
 const Posts = ({ getPosts, post: { posts, loading } }) => {
-  useEffect(() => getPosts(), [getPosts]);
+  useEffect(() => {
+    getPosts();
+  }, [getPosts]);
+
   return loading ? (
     <Spinner />
   ) : (
