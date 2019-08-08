@@ -3,7 +3,7 @@ const connectDB = require('./config/db');
 const app = express();
 const logger = require('./lib/logger');
 const morgan = require('morgan');
-import path from 'path';
+const path = require('path');
 
 // Connect database
 connectDB();
