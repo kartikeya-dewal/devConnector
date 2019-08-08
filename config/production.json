@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://kartik:kartik@devconnector-aiwlf.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "myToken",
+  "githubClientId": "ef08bd0e323d1c84e75c",
+  "githubSecret": "bca9b168b0ae6367c45d1c64af24ec74a8e8d31b"
+}
